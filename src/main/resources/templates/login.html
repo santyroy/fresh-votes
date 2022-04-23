@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fresh Votes Login</title>
+</head>
+<body>
+<div style="display: flex;justify-content: center;">
+
+    <form action="/login" method="post">
+
+        <div th:if="${param.error != null}" style="margin-bottom: 10px; color: red">
+            Invalid Credentials.
+        </div>
+        <div style="margin-bottom: 10px">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username">
+        </div>
+        <div style="margin-bottom: 10px">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password">
+        </div>
+        <button type="submit">Login</button>
+
+
+    </form>
+</div>
+</body>
+</html>
