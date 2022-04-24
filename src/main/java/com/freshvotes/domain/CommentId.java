@@ -4,6 +4,7 @@ package com.freshvotes.domain;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class CommentId implements Serializable {
@@ -27,5 +28,18 @@ public class CommentId implements Serializable {
 
     public void setFeature(Feature feature) {
         this.feature = feature;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommentId commentId = (CommentId) o;
+        return Objects.equals(user, commentId.user) && Objects.equals(feature, commentId.feature);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user, feature);
     }
 }
