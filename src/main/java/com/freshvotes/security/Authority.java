@@ -16,6 +16,7 @@ public class Authority implements GrantedAuthority {
     @ManyToOne
     private User user;
 
+
     public Integer getId() {
         return id;
     }
