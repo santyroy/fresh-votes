@@ -8,7 +8,11 @@ import java.util.Objects;
 @Embeddable
 public class VoteId implements Serializable {
 
-    @ManyToOne
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@ManyToOne
     private User user;
     @ManyToOne
     private Feature feature;

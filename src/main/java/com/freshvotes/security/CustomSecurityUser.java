@@ -7,7 +7,11 @@ import java.util.Set;
 
 public class CustomSecurityUser implements UserDetails {
 
-   private User user;
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private User user;
 
     public CustomSecurityUser(User user) {
         this.user = user;
