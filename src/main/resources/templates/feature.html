@@ -11,7 +11,8 @@
 <div class="container mt-5">
     <h3>New Feature <span class="badge bg-secondary" th:text="${feature.status}">Status</span></h3>
 
-    <form action="" method="post">
+    <form th:action="@{/products/{productId}/features/{featureId}(featureId=${feature.id},productId=${feature.product.id})}"
+          method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <input type="hidden" th:field="${feature.id}">
         <input type="hidden" th:field="${feature.product}">
@@ -19,15 +20,57 @@
 
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" th:field="${feature.title}">
+            <input type="text" class="form-control" id="title" th:field="${feature.title}"
+                   th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}">
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea type="password" class="form-control" id="description"
-                      th:field="${feature.description}"></textarea>
+            <textarea type="text" class="form-control" id="description"
+                      th:field="${feature.description}"
+                      th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        <div th:if="${user.id == feature.user.id}">
+            <button type="submit" class="btn btn-primary mt-3">Save</button>
+        </div>
     </form>
+
+    <div class="mt-2 mb-3">
+        <h4>Comments</h4>
+        <form th:action="@{/products/{productId}/features/{featureId}/comments(featureId=${feature.id},productId=${feature.product.id})}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <div>
+                <label for="comment">Leave a comment below</label>
+                <textarea type="text" class="form-control mb-2" id="comment" th:field="${rootComment.text}"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Add New Comment</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <div th:replace="fragments/comment :: commentThread"></div>
 </div>
+
+<script type="text/javascript">
+    $(function() {
+        $("button[id*='replyBtn-']").click(function() {
+
+            <!-- adds class 'd-none' to all the forms on any reply button click -->
+            <!-- hides all the open forms -->
+            $("form[id*='replyForm-']:not(.d-none)").each(function() {
+                let formId = $(this).prop("id")
+                $('#' + formId).addClass('d-none')
+                console.log('form #' + formId + ' hidden')
+            })
+
+        <!-- removes class 'd-none' to the current forms under reply button on click -->
+        <!-- shows a particular forms under the reply button -->
+            let commentId = $(this).prop("id").split("-")[1]
+            let formId = "replyForm-" + commentId
+            $('#' + formId).removeClass('d-none')
+            console.log('form #' + formId + ' shown')
+        })
+    })
+</script>
 </body>
 </html>

@@ -22,13 +22,15 @@
                 </div>
             </div>
 
-            <div th:each="product : ${products}">
-                <div class="row">
-                    <div class="col">
-                        <a th:href="@{/products/{productId}(productId=${product.id})}" th:text="${product.name}"></a>
-                    </div>
+            <div class="card mb-2" th:each="product : ${products}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${product.name}">Special title treatment</h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="${product.published ? 'Published' : 'Not Published'}"></h6>
+                    <a th:href="@{/products/{productId}(productId=${product.id})}" class="btn btn-info">Edit</a>
+                    <a th:href="@{/p/{productName}(productName=${product.name})}" class="btn btn-info">View Features</a>
                 </div>
             </div>
+
         </div>
     </div>
 
